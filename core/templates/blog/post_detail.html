@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Home Page - Prev Index</h1>
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.content }}</p>
+    <p>Reporter: {{ object.author }}</p>
+    <p>Published: {{ object.published_date|date }}</p>
 </body>
 </html>
