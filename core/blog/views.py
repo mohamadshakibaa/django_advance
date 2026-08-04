@@ -5,6 +5,7 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
+    DeleteView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Post
@@ -48,20 +49,22 @@ class PostDetailView(DetailView):
     model = Post
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ["title", "content", "category", "status", "published_date"]
     success_url = "/blog/post/"
 
     def form_valid(self, form):
-        form.save()
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 
-class PostUpdateView(UpdateView):
-    form_post = PostForm
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    form_class = PostForm
     success_url = "/blog/post/"
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super(PostCreateView, self).form_valid(form)
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = "/blog/post/"
