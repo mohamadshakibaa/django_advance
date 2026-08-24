@@ -16,4 +16,5 @@ urlpatterns = [
     path('post_create/', views.PostCreateView.as_view(), name='post-create'),
     path('post_update/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-update'),
     path('post_delete/<int:pk>/', views.PostDeleteView.as_view(), name='post-delete'),
+    path('api/v1/', include('blog.api.v1.urls'))
 ]
