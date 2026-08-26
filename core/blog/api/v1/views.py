@@ -17,7 +17,9 @@ def postlist(request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-
+    
+    
+"""
 @api_view()
 def postdetail(request, id):
     # try:                                   instead of Get_Object_or_404
@@ -28,4 +30,18 @@ def postdetail(request, id):
         print(serializer.data)
         return Response(serializer.data)
     # except Post.DoesNotExist:
-        # return Response({"detail":"Post dose not exist"}, status=status.HTTP_404_NOT_FOUND)/
+        # return Response({"detail":"Post dose not exist"}, status=status.HTTP_404_NOT_FOUND)/"""
+        
+@api_view(["GET", "PUT"])
+def postdetail(request, id):
+    post = get_object_or_404(Post, pk=id)
+    if request.method == "GET":
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
+    if request.method == "PUT":
+        serializer = PostSerializer(post, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+        
