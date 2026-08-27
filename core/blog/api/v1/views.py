@@ -1,11 +1,14 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from ...models import Post
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
+
 
 @api_view(["GET", "POST"])
+@permission_classes([IsAdminUser])
 def postlist(request):
     if request.method == 'GET':
         # posts = Post.objects.all()
@@ -33,6 +36,7 @@ def postdetail(request, id):
         # return Response({"detail":"Post dose not exist"}, status=status.HTTP_404_NOT_FOUND)/"""
         
 @api_view(["GET", "PUT", "DELETE"])
+@permission_classes([IsAuthenticated])
 def postdetail(request, id):
     post = get_object_or_404(Post, pk=id)
     if request.method == "GET":
