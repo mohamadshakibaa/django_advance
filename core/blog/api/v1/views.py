@@ -5,8 +5,10 @@ from ...models import Post
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
+from rest_framework.views import APIView
 
 
+"""
 @api_view(["GET", "POST"])
 @permission_classes([IsAdminUser])
 def postlist(request):
@@ -19,8 +21,22 @@ def postlist(request):
         serializer = PostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(serializer.data)"""
+    
+class PostList(APIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = PostSerializer
+    
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
     
+    def post(self, request):
+        serializer = PostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
     
 """
 @api_view()
