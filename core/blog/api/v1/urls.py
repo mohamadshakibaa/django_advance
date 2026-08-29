@@ -7,5 +7,5 @@ urlpatterns = [
     # path('post/', views.postlist, name="post-list" ),
     # path('post/<int:id>', views.postdetail, name="post-detail" ),
     path('post/', views.PostList.as_view(), name="post-list" ),
-    path('post/<int:id>', views.PostDetail.as_view(), name="post-detail" ),
+    path('post/<int:pk>', views.PostDetail.as_view(), name="post-detail" ),
 ]

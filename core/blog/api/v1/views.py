@@ -62,6 +62,7 @@ def postdetail(request, id):
 """
 
 
+""" Class Based View with  (APIView)  GET, POST
 class PostList(APIView):
     permission_classes = [IsAdminUser]
     serializer_class = PostSerializer
@@ -76,8 +77,9 @@ class PostList(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+"""
 
-
+""" Class Based View with  (AOIView)  GET, PUT, DELETE
 class PostDetail(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
@@ -100,3 +102,33 @@ class PostDetail(APIView):
         return Response(
             {"detail": "This item deleted"}, status=status.HTTP_204_NO_CONTENT
         )
+
+"""
+
+''' This is an other way for Create and List view in Class with (GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin)
+from rest_framework.generics import GenericAPIView
+from rest_framework import mixins
+
+class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+    permission_classes = [IsAdminUser]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)'''
+        
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
+class PostList(ListCreateAPIView):
+    permission_classes = [IsAdminUser]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    
+class PostDetail(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser]
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    
