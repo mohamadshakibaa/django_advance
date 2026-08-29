@@ -119,7 +119,8 @@ class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)'''
-        
+
+''' Class Based View with with  (ListCreateAPIView, RetrieveUpdateDestroyAPIView)       
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 class PostList(ListCreateAPIView):
@@ -131,4 +132,34 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    '''
     
+''' Class Based View with (ViewSet)
+from rest_framework import viewsets
+
+class PostViewSet(viewsets.ViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    
+    def list(self, request):
+        serializer = self.serializer_class(self.queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        post = get_object_or_404(Post, pk=pk)
+        serializer = self.serializer_class(post)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        pass
+    
+    def update(self, request, pk=None):
+        pass
+
+    def partial_update(self, request, pk=None):
+        pass
+
+    def destroy(self, request, pk=None):
+        pass
+'''
+
