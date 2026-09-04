@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from .paginations import DefaultPagination
 
 """Function Based View 
                                            
@@ -175,6 +176,7 @@ class PostModelViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['category', 'author', 'status']
     search_fields = ['title', '=content']
+    pagination_class = DefaultPagination
     
 class CategoryModelViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
