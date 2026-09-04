@@ -10,6 +10,7 @@ from rest_framework.permissions import (
     IsAuthenticated,
 )
 from rest_framework.views import APIView
+from .permissions import IsOwnerOrReadOnly
 
 """Function Based View 
                                            
@@ -166,7 +167,7 @@ class PostViewSet(viewsets.ViewSet):
 from rest_framework.viewsets import ModelViewSet
 
 class PostModelViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     
