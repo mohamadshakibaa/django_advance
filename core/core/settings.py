@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",  
     "drf_yasg",
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -145,8 +146,15 @@ AUTH_USER_MODEL = "accounts.User"
 
 
 # rest_framework permissions
-REST_FRAMEWORK = {
+# REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
     # ]
+# }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
 }
