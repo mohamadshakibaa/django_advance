@@ -2,7 +2,8 @@ from rest_framework import serializers
 from ...models import User
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class RegistraionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,3 +47,12 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        validated_data = super().validate(attrs)
+        validated_data['email'] = self.user.email
+        validated_data['user_id'] = self.user.id
+        
+        return validated_data
