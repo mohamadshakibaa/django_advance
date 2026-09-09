@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ...models import User
+from ...models import User, Profile
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -88,3 +88,11 @@ class ChangePasswordSerializer(serializers.Serializer):
         instance.set_password(validated_data['password1'])
         instance.save()
         return instance
+    
+    
+class ProfileApiViewSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(source="user.email", read_only=True)
+    
+    class Meta:
+        model = Profile
+        fields = ['id', 'email', 'first_name', 'last_name', 'image', 'description']
