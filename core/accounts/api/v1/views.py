@@ -78,3 +78,16 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
+    
+
+from django.core.mail import send_mail
+class TestEmailSend(generics.GenericAPIView):
+
+    def get(self, requset, *args, **kwargs):
+        send_mail(
+            "Subject here",
+            "Here is the message.",
+            "from@example.com",
+            ["to@example.com"],)
+        
+        return Response("email sent")

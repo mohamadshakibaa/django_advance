@@ -20,5 +20,9 @@ urlpatterns = [
     
     path('change_password/', views.ChangePasswordView.as_view(), name='auth_change_password'),
     
-    path('profile/', views.ProfileApiView.as_view(), name='profile')
+    path('profile/', views.ProfileApiView.as_view(), name='profile'),
+    
+    path('test-email/', views.TestEmailSend.as_view(), name='test-email'),
+    # path('activation/confirm/'),
+    # path('activation/resend/')
 ]
