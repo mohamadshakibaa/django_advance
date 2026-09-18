@@ -7,3 +7,5 @@ markdown
 django-filter
 drf-yasg[validation]
 django-mail-templated
+black
+ruff

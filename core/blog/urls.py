@@ -1,20 +1,24 @@
-from django.urls import path, include
-from . import views
-from django.views.generic import TemplateView
+from django.urls import include, path
 from django.views.generic.base import RedirectView
 
-app_name = 'blog'
+from . import views
+
+app_name = "blog"
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path("", views.home, name="home"),
     path("fbv-index", views.indexView),
     path("cbv-index", views.IndexView.as_view(template_name="index2.html")),
-    path("go-to-index", RedirectView.as_view(url="http://index2.com")), # example
-    path("go-to-index", RedirectView.as_view(pattern_name="blog:index2"), name='cbv_view'), # or we can use   pattern_name
-    path('post/', views.PostListView.as_view(), name='post-list'),
-    path('post_detail/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
-    path('post_create/', views.PostCreateView.as_view(), name='post-create'),
-    path('post_update/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-update'),
-    path('post_delete/<int:pk>/', views.PostDeleteView.as_view(), name='post-delete'),
-    path('api/v1/', include('blog.api.v1.urls'))
+    path("go-to-index", RedirectView.as_view(url="http://index2.com")),  # example
+    path(
+        "go-to-index", RedirectView.as_view(pattern_name="blog:index2"), name="cbv_view"
+    ),  # or we can use   pattern_name
+    path("post/", views.PostListView.as_view(), name="post-list"),
+    path("post_detail/<int:pk>/", views.PostDetailView.as_view(), name="post-detail"),
+    path("post_create/", views.PostCreateView.as_view(), name="post-create"),
+    path(
+        "post_update/<int:pk>/edit/", views.PostUpdateView.as_view(), name="post-update"
+    ),
+    path("post_delete/<int:pk>/", views.PostDeleteView.as_view(), name="post-delete"),
+    path("api/v1/", include("blog.api.v1.urls")),
 ]

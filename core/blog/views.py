@@ -1,15 +1,16 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import (
-    TemplateView,
-    ListView,
-    DetailView,
     CreateView,
-    UpdateView,
     DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
 )
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Post
+
 from .forms import PostForm
+from .models import Post
 
 # Create your views here.
 

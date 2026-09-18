@@ -1,19 +1,13 @@
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from .serializers import PostSerializer, CategorySerializer
-from ...models import Post, Category
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from rest_framework.permissions import (
-    IsAuthenticatedOrReadOnly,
-    IsAdminUser,
-    IsAuthenticated,
-)
-from rest_framework.views import APIView
-from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+)
+
+from ...models import Category, Post
 from .paginations import DefaultPagination
+from .permissions import IsOwnerOrReadOnly
+from .serializers import CategorySerializer, PostSerializer
 
 """Function Based View 
                                            
@@ -109,7 +103,7 @@ class PostDetail(APIView):
 
 """
 
-''' This is an other way for Create and List view in Class with (GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin)
+""" This is an other way for Create and List view in Class with (GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin)
 from rest_framework.generics import GenericAPIView
 from rest_framework import mixins
 
@@ -122,9 +116,9 @@ class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)'''
+        return self.create(request, *args, **kwargs)"""
 
-''' Class Based View with with  (ListCreateAPIView, RetrieveUpdateDestroyAPIView)       
+""" Class Based View with with  (ListCreateAPIView, RetrieveUpdateDestroyAPIView)       
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 class PostList(ListCreateAPIView):
@@ -136,9 +130,9 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    '''
-    
-''' Class Based View with (ViewSet)
+    """
+
+""" Class Based View with (ViewSet)
 from rest_framework import viewsets
 
 class PostViewSet(viewsets.ViewSet):
@@ -165,19 +159,21 @@ class PostViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         pass
-'''
+"""
 
 from rest_framework.viewsets import ModelViewSet
+
 
 class PostModelViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['category', 'author', 'status']
-    search_fields = ['title', '=content']
+    filterset_fields = ["category", "author", "status"]
+    search_fields = ["title", "=content"]
     pagination_class = DefaultPagination
-    
+
+
 class CategoryModelViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Category.objects.all()

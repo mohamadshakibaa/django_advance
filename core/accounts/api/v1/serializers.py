@@ -1,10 +1,10 @@
-from rest_framework import serializers
-from ...models import User, Profile
 from django.contrib.auth import authenticate
-from django.utils.translation import gettext_lazy as _
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from ...models import Profile, User
 
 
 class RegistraionSerializer(serializers.ModelSerializer):
@@ -67,55 +67,53 @@ class ChangePasswordSerializer(serializers.Serializer):
     password2 = serializers.CharField(write_only=True, required=True)
 
     def validate_old_password(self, value):
-        user = self.context['request'].user
+        user = self.context["request"].user
 
         if not user.check_password(value):
-            raise serializers.ValidationError(
-                "Old password is not correct."
-            )
+            raise serializers.ValidationError("Old password is not correct.")
 
         return value
 
     def validate_password1(self, value):
-        validate_password(value, self.context['request'].user)
+        validate_password(value, self.context["request"].user)
         return value
 
     def validate(self, attrs):
-        if attrs['password1'] != attrs['password2']:
-            raise serializers.ValidationError({
-                "password2": "Password fields didn't match."
-            })
+        if attrs["password1"] != attrs["password2"]:
+            raise serializers.ValidationError(
+                {"password2": "Password fields didn't match."}
+            )
 
         return attrs
 
     def update(self, instance, validated_data):
-        instance.set_password(validated_data['password1'])
+        instance.set_password(validated_data["password1"])
         instance.save()
         return instance
-    
-    
+
+
 class ProfileApiViewSerializer(serializers.ModelSerializer):
     email = serializers.CharField(source="user.email", read_only=True)
-    
+
     class Meta:
         model = Profile
-        fields = ['id', 'email', 'first_name', 'last_name', 'image', 'description']
-        
+        fields = ["id", "email", "first_name", "last_name", "image", "description"]
+
 
 class ActivationResendSerializer(serializers.Serializer):
     email = serializers.CharField(required=True)
-    
+
     def validate(self, attrs):
         email = attrs.get("email")
         try:
             user_obj = User.objects.get(email=email)
         except User.DoesNotExist:
             raise serializers.ValidationError({"details": "user does not exist"})
-        
+
         if user_obj.is_verified:
-            raise serializers.ValidationError({"details": "user has already been verified"})
-        
+            raise serializers.ValidationError(
+                {"details": "user has already been verified"}
+            )
+
         attrs["user"] = user_obj
         return super().validate(attrs)
-    
-    

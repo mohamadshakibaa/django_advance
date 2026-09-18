@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,11 +44,11 @@ INSTALLED_APPS = [
     "accounts",
     "blog",
     "rest_framework",
-    "django_filters",  
+    "django_filters",
     "drf_yasg",
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
-    'mail_templated',
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "mail_templated",
 ]
 
 MIDDLEWARE = [
@@ -149,28 +150,28 @@ AUTH_USER_MODEL = "accounts.User"
 
 # rest_framework permissions
 # REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ]
+# 'DEFAULT_PERMISSION_CLASSES': [
+#     'rest_framework.permissions.IsAuthenticated',
+# ]
 # }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ]
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # Host for sending e-mail.
-EMAIL_HOST = 'smtp4dev'
+EMAIL_HOST = "smtp4dev"
 
 # Port for sending e-mail.
 EMAIL_PORT = 25
 
 # Optional SMTP authentication information for EMAIL_HOST.
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
 EMAIL_USE_TLS = False

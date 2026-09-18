@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from ...models import Post, Category
-from accounts.models import Profile
 
+from ...models import Category, Post
 
 # class PostSerializer(serializers.Serializer):
 #     id = serializers.IntegerField()
@@ -29,7 +28,7 @@ class PostSerializer(serializers.ModelSerializer):
             "created_date",
             "published_date",
         ]
-        read_only_fields = ['author']
+        read_only_fields = ["author"]
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -40,9 +39,9 @@ class PostSerializer(serializers.ModelSerializer):
             rep.pop("published_date", None)
         else:
             rep.pop("content", None)
-            
+
         return rep
-    
+
     def create(self, validated_data):
-        validated_data['author'] = self.context['request'].user
+        validated_data["author"] = self.context["request"].user
         return super().create(validated_data)
