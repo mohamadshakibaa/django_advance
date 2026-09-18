@@ -5,5 +5,5 @@ Account Activation
 {% endblock %}
 
 {% block html %}
-http;//{{ token }}
+{{ token }}
 {% endblock %}
