@@ -11,4 +11,4 @@ black
 ruff
 pytest
 pytest-django
-rest_framework_simplejwt
+djangorestframework-simplejwt
