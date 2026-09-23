@@ -9,3 +9,6 @@ drf-yasg[validation]
 django-mail-templated
 black
 ruff
+pytest
+pytest-django
+rest_framework_simplejwt
