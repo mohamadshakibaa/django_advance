@@ -12,3 +12,4 @@ ruff
 pytest
 pytest-django
 djangorestframework-simplejwt
+faker
