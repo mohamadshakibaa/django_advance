@@ -177,3 +177,6 @@ EMAIL_HOST_PASSWORD = ""
 EMAIL_USE_TLS = False
 
 SWAGGER_USE_COMPAT_RENDERERS = False
+
+# celery configs
+CELERY_BROKER_URL = "redis://redis:6379/1"

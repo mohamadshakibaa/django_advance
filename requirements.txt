@@ -1,15 +1,30 @@
+# general modules
 Django==5.2.8
-psycopg[binary]==3.2.9
 Pillow==11.3.0
 python-decouple
 djangorestframework
+
+
+# third party modules
 markdown
+psycopg[binary]==3.2.9
 django-filter
 drf-yasg[validation]
+djoser
+djangorestframework-simplejwt
+
+# deployment modules
+
+# email third party modules
 django-mail-templated
+
+# refactoring and tests
 black
 ruff
 pytest
 pytest-django
-djangorestframework-simplejwt
-faker
+Faker
+
+#  background proccess and cache
+celery
+redis
